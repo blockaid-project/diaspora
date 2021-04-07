@@ -8,7 +8,7 @@ require 'uri'
 require 'builder/xchar'
 require 'carrierwave/orm/activerecord'
 require 'erb'
-require 'redcarpet/render_strip'
+# require 'redcarpet/render_strip'
 require 'typhoeus'
 
 # Our libs

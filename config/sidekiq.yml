@@ -1,4 +1,4 @@
-<% require_relative 'config/load_config' %>
+<% require './config/load_config' %>
 ---
 :verbose: false
 <% unless AppConfig.heroku? %>

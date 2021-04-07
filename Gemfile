@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 source "https://rubygems.org"
 
 gem "rails", "5.2.4.3"
@@ -10,8 +9,9 @@ gem "responders", "2.4.1"
 
 # Appserver
 
-gem "unicorn", "5.5.3", require: false
-gem "unicorn-worker-killer", "0.4.4"
+# gem "unicorn", "5.5.3", require: false
+# gem "unicorn-worker-killer", "0.4.4"
+gem "puma"
 
 # Federation
 
@@ -72,6 +72,10 @@ group :mysql, optional: true do
 end
 group :postgresql, optional: true do
   gem "pg",     "1.2.3"
+end
+
+git 'git@github.com:zhangwen0411/activerecord-jdbc-adapter.git', branch: '52-stable' do
+  gem 'activerecord-jdbcmysql-adapter', :platform => :jruby
 end
 
 
@@ -144,7 +148,7 @@ gem "leaflet-rails",       "1.6.0"
 
 gem "nokogiri",          "1.10.9"
 gem "open_graph_reader", "0.7.0" # also update User-Agent in features/support/webmock.rb
-gem "redcarpet",         "3.5.0"
+# gem "redcarpet",         "3.5.0"
 gem "ruby-oembed",       "0.12.0"
 gem "twitter-text",      "1.14.7"
 
@@ -227,7 +231,7 @@ group :production do # we don"t install these on travis to speed up test runs
 
   # Process management
 
-  gem "eye", "0.10.0"
+  # gem "eye", "0.10.0"
 
   # Redirects
 
@@ -248,14 +252,14 @@ group :development do
   gem "rb-inotify",     "0.10.1", require: false
 
   # Linters
-  gem "haml_lint",      "0.35.0", require: false
-  gem "pronto",         "0.10.0", require: false
-  gem "pronto-eslint",  "0.10.0", require: false
-  gem "pronto-haml",    "0.10.0", require: false
-  gem "pronto-rubocop", "0.10.0", require: false
-  gem "pronto-scss",    "0.10.0", require: false
-  gem "rubocop",        "0.80.1", require: false
-  gem "rubocop-rails",  "2.4.1", require: false
+  # gem "haml_lint",      "0.35.0", require: false
+  # gem "pronto",         "0.10.0", require: false
+  # gem "pronto-eslint",  "0.10.0", require: false
+  # gem "pronto-haml",    "0.10.0", require: false
+  # gem "pronto-rubocop", "0.10.0", require: false
+  # gem "pronto-scss",    "0.10.0", require: false
+  # gem "rubocop",        "0.80.1", require: false
+  # gem "rubocop-rails",  "2.4.1", require: false
 
   # Preloading environment
 
@@ -265,7 +269,7 @@ group :development do
 
   # Debugging
   gem "pry"
-  gem "pry-byebug"
+  # gem "pry-byebug"
 
   # test coverage
   gem "simplecov", "0.16.1", require: false

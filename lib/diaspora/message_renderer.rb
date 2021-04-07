@@ -49,17 +49,17 @@ module Diaspora
         end
       end
 
-      def strip_markdown
-        renderer = Redcarpet::Markdown.new Redcarpet::Render::StripDown, options[:markdown_options]
-        @message = renderer.render(message).strip
-      end
+      # def strip_markdown
+      #   renderer = Redcarpet::Markdown.new Redcarpet::Render::StripDown, options[:markdown_options]
+      #   @message = renderer.render(message).strip
+      # end
 
-      def markdownify
-        renderer = Diaspora::Markdownify::HTML.new options[:markdown_render_options]
-        markdown = Redcarpet::Markdown.new renderer, options[:markdown_options]
+      # def markdownify
+      #   renderer = Diaspora::Markdownify::HTML.new options[:markdown_render_options]
+      #   markdown = Redcarpet::Markdown.new renderer, options[:markdown_options]
 
-        @message = markdown.render message
-      end
+      #   @message = markdown.render message
+      # end
 
       # In very clear cases, let newlines become <br /> tags
       # Grabbed from Github flavored Markdown
@@ -177,7 +177,7 @@ module Diaspora
       process(opts) {
         make_mentions_plain_text
         diaspora_links
-        strip_markdown
+        # strip_markdown
         squish
         append_and_truncate
       }
@@ -212,7 +212,7 @@ module Diaspora
         normalize
         diaspora_links
         camo_urls if AppConfig.privacy.camo.proxy_markdown_images?
-        markdownify
+        # markdownify
         render_mentions
         render_tags
         squish
