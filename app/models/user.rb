@@ -595,6 +595,12 @@ class User < ApplicationRecord
     true
   end
 
+  def serialize_from_session(key, salt)
+    Rails.logger.debug("User.serialize_from_session")
+    record = to_adapter.get(key)
+    record if record && record.authenticatable_salt == salt
+  end
+
   private
 
   def clearable_fields
