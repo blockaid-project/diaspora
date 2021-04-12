@@ -595,8 +595,8 @@ class User < ApplicationRecord
     true
   end
 
-  def serialize_from_session(key, salt)
-    Rails.logger.debug("User.serialize_from_session")
+  def self.serialize_from_session(key, salt)
+    puts "*** self.serialize_from_session: key = #{key}"
     record = to_adapter.get(key)
     record if record && record.authenticatable_salt == salt
   end
