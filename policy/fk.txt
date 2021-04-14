@@ -26,3 +26,5 @@ user_preferences.user_id:users.id;
 tag_followings.tag_id:tags.id;
 tag_followings.user_id:users.id;
 reports.user_id:users.id;
+blocks.user_id:users.id;
+blocks.person_id:people.id;

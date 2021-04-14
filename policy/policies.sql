@@ -73,6 +73,7 @@ SELECT roles.id, roles.person_id, roles.name, roles.created_at, roles.updated_at
 
 -- visible_mine
 SELECT aspects.id, aspects.name, aspects.user_id, aspects.created_at, aspects.updated_at, aspects.order_id, aspects.post_default FROM aspects WHERE aspects.user_id = _MY_UID;
+SELECT blocks.id, blocks.user_id, blocks.person_id FROM blocks WHERE blocks.user_id = _MY_UID;
 SELECT services.id, services.type, services.user_id, services.uid, services.access_token, services.access_secret, services.nickname, services.created_at, services.updated_at FROM services WHERE services.user_id = _MY_UID;
 SELECT contacts.id, contacts.user_id, contacts.person_id, contacts.created_at, contacts.updated_at, contacts.sharing, contacts.receiving FROM contacts WHERE contacts.user_id = _MY_UID;
 SELECT user_preferences.id, user_preferences.email_type, user_preferences.user_id, user_preferences.created_at, user_preferences.updated_at FROM user_preferences WHERE user_preferences.user_id = _MY_UID;

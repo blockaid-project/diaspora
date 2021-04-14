@@ -24,6 +24,7 @@ contacts:id;
 user_preferences:id;
 tag_followings:id;
 reports:id;
+blocks:id;
 
 -- unique constraints...
 users:username;
@@ -48,3 +49,4 @@ services:type,uid;
 contacts:user_id,person_id;
 tag_followings:tag_id,user_id;
 reports:item_id,item_type,user_id;
+blocks:user_id,person_id;
