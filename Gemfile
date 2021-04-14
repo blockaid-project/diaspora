@@ -28,7 +28,7 @@ gem "json-schema", "2.8.1"
 
 gem "devise", "4.7.1"
 gem "devise-two-factor", "3.0.3"
-gem "devise_lastseenable", "0.0.6"
+gem "devise_lastseenable", "0.0.6", :git => 'git@github.com:zhangwen0411/devise_lastseenable.git'
 gem "rqrcode", "1.1.2"
 
 # Captcha
