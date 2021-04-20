@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:zhangwen0411/activerecord-jdbc-adapter.git
-  revision: 51b5e19798c754f54cacc15a0ec74219f273a425
+  revision: 73f184be324b51a16baa6c391a39ba5a4840bde8
   branch: 52-stable
   specs:
     activerecord-jdbc-adapter (52.7-java)

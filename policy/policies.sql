@@ -28,7 +28,8 @@ SELECT people.id, people.guid, people.diaspora_handle, people.serialized_public_
 SELECT profiles.id, profiles.diaspora_handle, profiles.first_name, profiles.last_name, profiles.image_url, profiles.image_url_small, profiles.image_url_medium, profiles.created_at, profiles.updated_at, profiles.full_name, profiles.nsfw, profiles.public_details, profiles.searchable, profiles.person_id FROM profiles;
 
 -- extended_profiles
-SELECT profiles.id, profiles.bio, profiles.location, profiles.gender, profiles.birthday FROM profiles;
+SELECT profiles.id, profiles.bio, profiles.location, profiles.gender, profiles.birthday FROM profiles WHERE profiles.public_details = 1;
+SELECT profiles.id, profiles.bio, profiles.location, profiles.gender, profiles.birthday FROM profiles, contacts WHERE contacts.user_id = _MY_UID AND contacts.person_id = profiles.person_id AND contacts.sharing = 1;
 
 -- visible_photos
 SELECT photos.id, photos.author_id, photos.public, photos.guid, photos.pending, photos.text, photos.remote_photo_path, photos.remote_photo_name, photos.random_string, photos.processed_image, photos.created_at, photos.updated_at, photos.unprocessed_image, photos.status_message_guid, photos.height, photos.width FROM photos, people WHERE photos.author_id = people.id AND photos.pending = 0 AND people.owner_id = _MY_UID;
