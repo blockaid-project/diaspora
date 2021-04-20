@@ -85,7 +85,7 @@ class PostService
 
   def mentions_in_comments_for_post(post_id)
     Mention
-      .joins("INNER JOIN comments ON mentions_container_id = comments.id AND mentions_container_type = 'Comment'")
+      .joins("INNER JOIN comments ON mentions.mentions_container_id = comments.id AND mentions.mentions_container_type = 'Comment'")
       .where(comments: {commentable_id: post_id, commentable_type: "Post"})
   end
 end
