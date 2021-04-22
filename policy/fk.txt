@@ -19,6 +19,8 @@ conversation_visibilities.conversation_id:conversations.id;
 conversation_visibilities.person_id:people.id;
 roles.person_id:people.id;
 aspects.user_id:users.id;
+aspect_memberships.aspect_id:aspects.id;
+aspect_memberships.contact_id:contacts.id;
 services.user_id:users.id;
 contacts.user_id:users.id;
 contacts.person_id:people.id;
