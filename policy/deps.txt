@@ -30,3 +30,16 @@
               (= _t!tumblr_ids _tr!tumblr_ids))
             (= _t!root_guid _tr!guid)
             (= _tr!public 1)))))));
+
+-- contact_aspect_constraints
+|(assert
+  (forall ((_c!user_id Int) (_a!user_id Int))
+    (=>
+      (exists ((_c!id Int) (_c!person_id Int) (_c!created_at Int) (_c!updated_at Int) (_c!sharing Int) (_c!receiving Int)
+        (_a!id Int) (_a!name String) (_a!created_at Int) (_a!updated_at Int) (_a!order_id Int) (_a!chat_enabled Int) (_a!post_default Int)
+        (_am!id Int) (_am!created_at Int) (_am!updated_at Int))
+        (and
+          (!CONTACTS _c!id _c!user_id _c!person_id _c!created_at _c!updated_at _c!sharing _c!receiving)
+          (!ASPECTS _a!id _a!name _a!user_id _a!created_at _a!updated_at _a!order_id _a!chat_enabled _a!post_default)
+          (!ASPECT_MEMBERSHIPS _am!id _a!id _c!id _am!created_at _am!updated_at)))
+      (= _c!user_id _a!user_id))));
