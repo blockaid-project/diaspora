@@ -56,6 +56,7 @@ SELECT likes.* FROM likes, posts, people WHERE likes.target_id = posts.id AND li
 SELECT likes.* FROM likes, posts, share_visibilities WHERE likes.target_id = posts.id AND likes.target_type = 'Post' AND share_visibilities.shareable_id = posts.id AND share_visibilities.shareable_type = 'Post' AND share_visibilities.user_id = _MY_UID;
 
 -- visible_tags
+SELECT tags.*, taggings.* FROM tags, taggings WHERE tags.id = taggings.tag_id AND taggings.taggable_type = 'Profile';
 SELECT tags.*, taggings.* FROM tags, taggings, posts WHERE tags.id = taggings.tag_id AND taggings.taggable_id = posts.id AND taggings.taggable_type = 'Post' AND posts.`public` = 1;
 SELECT tags.*, taggings.* FROM tags, taggings, posts, people WHERE tags.id = taggings.tag_id AND taggings.taggable_id = posts.id AND taggings.taggable_type = 'Post' AND posts.author_id = people.id AND people.owner_id = _MY_UID;
 SELECT tags.*, taggings.* FROM tags, taggings, posts, share_visibilities WHERE tags.id = taggings.tag_id AND taggings.taggable_id = posts.id AND taggings.taggable_type = 'Post' AND share_visibilities.shareable_id = posts.id AND share_visibilities.shareable_type = 'Post' AND share_visibilities.user_id = _MY_UID;
@@ -63,9 +64,16 @@ SELECT tags.*, taggings.* FROM tags, taggings, posts, share_visibilities WHERE t
 -- visible_notifications
 SELECT notifications.* FROM notifications WHERE notifications.recipient_id = _MY_UID;
 
+-- visible_notification_actors
+SELECT notification_actors.* FROM notifications, notification_actors WHERE notifications.recipient_id = _MY_UID AND notification_actors.notification_id = notifications.id;
+
 -- visible_conv
 SELECT conversations.* FROM conversations, people WHERE conversations.author_id = people.id AND people.owner_id = _MY_UID;
-SELECT conversation_visibilities.* FROM conversation_visibilities, people WHERE conversation_visibilities.person_id = people.id AND people.owner_id = _MY_UID;
+SELECT o_cv.*, conversations.* FROM conversation_visibilities o_cv, conversation_visibilities my_cv, conversations, people WHERE o_cv.conversation_id = my_cv.conversation_id AND conversations.id = my_cv.conversation_id AND my_cv.person_id = people.id AND people.owner_id = _MY_UID;
+
+-- visible_messages
+SELECT messages.* FROM messages, conversations, people WHERE messages.conversation_id = conversations.id AND conversations.author_id = people.id AND people.owner_id = _MY_UID;
+SELECT messages.* FROM messages, conversation_visibilities, people WHERE messages.conversation_id = conversation_visibilities.conversation_id AND conversation_visibilities.person_id = people.id AND people.owner_id = _MY_UID;
 
 -- visible_roles
 SELECT roles.* FROM roles, people WHERE roles.person_id = people.id AND people.owner_id = _MY_UID;
@@ -80,41 +88,45 @@ SELECT services.* FROM services WHERE services.user_id = _MY_UID;
 SELECT contacts.* FROM contacts WHERE contacts.user_id = _MY_UID;
 SELECT user_preferences.* FROM user_preferences WHERE user_preferences.user_id = _MY_UID;
 SELECT tag_followings.* FROM tag_followings WHERE tag_followings.user_id = _MY_UID;
+SELECT invitation_codes.* FROM invitation_codes WHERE invitation_codes.user_id = _MY_UID;
 
 -- visible_by_admin
-SELECT users.* FROM users, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
+SELECT users.* FROM users, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
 -- todo: self-join
--- SELECT people.* FROM people, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT posts.* FROM posts, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT share_visibilities.id, share_visibilities.shareable_id, share_visibilities.hidden, share_visibilities.shareable_type, share_visibilities.user_id FROM share_visibilities, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT mentions.* FROM mentions, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT comments.* FROM comments, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT profiles.* FROM profiles, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT photos.id, photos.author_id, photos.`public`, photos.guid, photos.pending, photos.text, photos.remote_photo_path, photos.remote_photo_name, photos.random_string, photos.processed_image, photos.created_at, photos.updated_at, photos.unprocessed_image, photos.status_message_guid, photos.height, photos.width FROM photos, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT locations.* FROM locations, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT polls.* FROM polls, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT participations.* FROM participations, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT likes.* FROM likes, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT tags.id, tags.name, tags.taggings_count FROM tags, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT taggings.id, taggings.tag_id, taggings.taggable_id, taggings.taggable_type, taggings.tagger_id, taggings.tagger_type, taggings.context, taggings.created_at FROM taggings, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT notifications.* FROM notifications, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT conversations.* FROM conversations, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT conversation_visibilities.* FROM conversation_visibilities, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
+SELECT o.* FROM people o, roles, people me WHERE roles.person_id = me.id AND roles.name = 'admin' AND me.owner_id = _MY_UID;
+SELECT posts.* FROM posts, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT share_visibilities.* FROM share_visibilities, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT mentions.* FROM mentions, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT comments.* FROM comments, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT profiles.* FROM profiles, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT photos.* FROM photos, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT locations.* FROM locations, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT polls.* FROM polls, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT participations.* FROM participations, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT likes.* FROM likes, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT tags.* FROM tags, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT taggings.* FROM taggings, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT notifications.* FROM notifications, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT conversations.* FROM conversations, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT conversation_visibilities.* FROM conversation_visibilities, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
 -- todo: self-join
--- SELECT roles.* FROM roles, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT aspects.* FROM aspects, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT aspect_memberships.* FROM aspect_memberships, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT services.* FROM services, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT contacts.* FROM contacts, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT user_preferences.* FROM user_preferences, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT tag_followings.* FROM tag_followings, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
-SELECT reports.* FROM reports, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin';
+SELECT o.* FROM roles o, roles my_role, people WHERE my_role.person_id = people.id AND my_role.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT aspects.* FROM aspects, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT aspect_memberships.* FROM aspect_memberships, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT services.* FROM services, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT contacts.* FROM contacts, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT user_preferences.* FROM user_preferences, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT tag_followings.* FROM tag_followings, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT reports.* FROM reports, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT blocks.* FROM blocks, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT invitation_codes.* FROM invitation_codes, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
+SELECT messages.* FROM messages, roles, people WHERE roles.person_id = people.id AND roles.name = 'admin' AND people.owner_id = _MY_UID;
 
 -- visible_by_moderators
-SELECT reports.id, reports.item_id, reports.item_type, reports.reviewed, reports.text, reports.created_at, reports.updated_at, reports.user_id, users.username FROM reports, users, roles, people WHERE reports.user_id = users.id AND roles.person_id = people.id AND roles.name = 'moderator';
-SELECT posts.* FROM reports, posts, roles, people WHERE reports.item_id = posts.id AND reports.item_type = 'Post' AND roles.person_id = people.id AND roles.name = 'moderator';
-SELECT mentions.* FROM mentions, reports, posts, roles, people WHERE mentions.mentions_container_id = posts.id AND mentions.mentions_container_type = 'Post' AND reports.item_id = posts.id AND reports.item_type = 'Post' AND roles.person_id = people.id AND roles.name = 'moderator';
-SELECT comments.* FROM reports, comments, roles, people WHERE reports.item_id = comments.id AND reports.item_type = 'Comment' AND roles.person_id = people.id AND roles.name = 'moderator';
-SELECT mentions.* FROM mentions, reports, comments, roles, people WHERE mentions.mentions_container_id = comments.id AND mentions.mentions_container_type = 'Comment' AND reports.item_id = comments.id AND reports.item_type = 'Comment' AND roles.person_id = people.id AND roles.name = 'moderator';
-SELECT posts.* FROM posts, reports, comments, roles, people WHERE comments.commentable_type = 'Post' AND comments.commentable_id = posts.id AND reports.item_id = comments.id AND reports.item_type = 'Comment' AND roles.person_id = people.id AND roles.name = 'moderator';
+SELECT reports.id, reports.item_id, reports.item_type, reports.reviewed, reports.text, reports.created_at, reports.updated_at, reports.user_id, users.username FROM reports, users, roles, people WHERE reports.user_id = users.id AND roles.person_id = people.id AND roles.name = 'moderator' AND people.owner_id = _MY_UID;
+SELECT posts.* FROM reports, posts, roles, people WHERE reports.item_id = posts.id AND reports.item_type = 'Post' AND roles.person_id = people.id AND roles.name = 'moderator' AND people.owner_id = _MY_UID;
+SELECT mentions.* FROM mentions, reports, posts, roles, people WHERE mentions.mentions_container_id = posts.id AND mentions.mentions_container_type = 'Post' AND reports.item_id = posts.id AND reports.item_type = 'Post' AND roles.person_id = people.id AND roles.name = 'moderator' AND people.owner_id = _MY_UID;
+SELECT comments.* FROM reports, comments, roles, people WHERE reports.item_id = comments.id AND reports.item_type = 'Comment' AND roles.person_id = people.id AND roles.name = 'moderator' AND people.owner_id = _MY_UID;
+SELECT mentions.* FROM mentions, reports, comments, roles, people WHERE mentions.mentions_container_id = comments.id AND mentions.mentions_container_type = 'Comment' AND reports.item_id = comments.id AND reports.item_type = 'Comment' AND roles.person_id = people.id AND roles.name = 'moderator' AND people.owner_id = _MY_UID;
+SELECT posts.* FROM posts, reports, comments, roles, people WHERE comments.commentable_type = 'Post' AND comments.commentable_id = posts.id AND reports.item_id = comments.id AND reports.item_type = 'Comment' AND roles.person_id = people.id AND roles.name = 'moderator' AND people.owner_id = _MY_UID;
 

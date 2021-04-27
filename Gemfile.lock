@@ -351,6 +351,8 @@ GEM
       multi_json
       to_regexp (~> 0.2.1)
     jwt (2.2.1)
+    lazy_columns (0.5.9)
+      activerecord (>= 3.1)
     leaflet-rails (1.6.0)
       rails (>= 4.2.0)
     listen (3.2.1)
@@ -793,6 +795,7 @@ DEPENDENCIES
   json (= 2.3.0)
   json-schema (= 2.8.1)
   json-schema-rspec (= 0.0.4)
+  lazy_columns
   leaflet-rails (= 1.6.0)
   logging-rails (= 0.6.0)
   markdown-it-html5-embed (= 1.0.0)

@@ -322,3 +322,5 @@ group :development, :test do
   # For `assigns` in controller specs
   gem "rails-controller-testing", "1.0.4"
 end
+
+gem 'lazy_columns'

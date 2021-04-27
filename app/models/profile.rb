@@ -5,6 +5,8 @@
 #   the COPYRIGHT file.
 
 class Profile < ApplicationRecord
+  lazy_load :bio, :gender, :birthday, :location
+
   self.include_root_in_json = false
 
   include Diaspora::Federated::Base

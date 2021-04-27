@@ -30,3 +30,7 @@ tag_followings.user_id:users.id;
 reports.user_id:users.id;
 blocks.user_id:users.id;
 blocks.person_id:people.id;
+invitation_codes.user_id:users.id;
+messages.author_id:people.id;
+messages.conversation_id:conversations.id;
+notification_actors.notification_id:notifications.id;

@@ -598,8 +598,6 @@ class User < ApplicationRecord
   def self.serialize_from_session(key, salt)
     ActiveRecord::Base.connection.execute("SET @_MY_UID = #{key[0]}")
     super
-    # record = to_adapter.get(key)
-    # record if record && record.authenticatable_salt == salt
   end
 
   private

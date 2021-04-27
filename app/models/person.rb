@@ -267,7 +267,7 @@ class Person < ApplicationRecord
   end
 
   def username
-    @username ||= owner ? owner.username : diaspora_handle.split("@")[0]
+    @username ||= diaspora_handle.split("@")[0]
   end
 
   def author

@@ -15,6 +15,7 @@ likes:id;
 tags:id;
 taggings:id;
 notifications:id;
+notification_actors:id;
 conversations:id;
 conversation_visibilities:id;
 roles:id;
@@ -26,6 +27,8 @@ user_preferences:id;
 tag_followings:id;
 reports:id;
 blocks:id;
+invitation_codes:id;
+messages:id;
 
 -- unique constraints...
 users:username;
@@ -52,3 +55,5 @@ tag_followings:tag_id,user_id;
 reports:item_id,item_type,user_id;
 blocks:user_id,person_id;
 aspect_memberships:aspect_id,contact_id;
+messages:guid;
+notification_actors:notification_id,person_id;
