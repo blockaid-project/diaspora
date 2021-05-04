@@ -43,3 +43,22 @@
           (!ASPECTS _a!id _a!name _a!user_id _a!created_at _a!updated_at _a!order_id _a!chat_enabled _a!post_default)
           (!ASPECT_MEMBERSHIPS _am!id _a!id _c!id _am!created_at _am!updated_at)))
       (= _c!user_id _a!user_id))));
+
+-- notifications
+|(assert
+  (forall ((_u!id Int) (_p!id Int))
+    (=>
+      (exists ((_n!id Int) (_n!unread Int) (_n!created_at Int) (_n!updated_at Int) (_n!type String))
+        (!NOTIFICATIONS _n!id "Post" _p!id _u!id _n!unread _n!created_at _n!updated_at _n!type))
+      (or
+        (exists ((_p!author_id Int) (_p!guid String) (_p!type String) (_p!text String) (_p!created_at Int) (_p!updated_at Int) (_p!provider_display_name String) (_p!root_guid String) (_p!likes_count Int) (_p!comments_count Int) (_p!o_embed_cache_id Int) (_p!reshares_count Int) (_p!interacted_at Int) (_p!tweet_id String) (_p!open_graph_cache_id Int) (_p!tumblr_ids String))
+          (!POSTS _p!id _p!author_id 1 _p!guid _p!type _p!text _p!created_at _p!updated_at _p!provider_display_name _p!root_guid _p!likes_count _p!comments_count _p!o_embed_cache_id _p!reshares_count _p!interacted_at _p!tweet_id _p!open_graph_cache_id _p!tumblr_ids))
+        (exists ((_p!public Int) (_p!guid String) (_p!type String) (_p!text String) (_p!created_at Int) (_p!updated_at Int) (_p!provider_display_name String) (_p!root_guid String) (_p!likes_count Int) (_p!comments_count Int) (_p!o_embed_cache_id Int) (_p!reshares_count Int) (_p!interacted_at Int) (_p!tweet_id String) (_p!open_graph_cache_id Int) (_p!tumblr_ids String) (_pe!id Int) (_pe!guid String) (_pe!diaspora_handle String) (_pe!serialized_public_key String) (_pe!created_at Int) (_pe!updated_at Int) (_pe!closed_account Int) (_pe!fetch_status Int) (_pe!pod_id Int))
+          (and
+            (!POSTS _p!id _pe!id _p!public _p!guid _p!type _p!text _p!created_at _p!updated_at _p!provider_display_name _p!root_guid _p!likes_count _p!comments_count _p!o_embed_cache_id _p!reshares_count _p!interacted_at _p!tweet_id _p!open_graph_cache_id _p!tumblr_ids)
+            (!PEOPLE _pe!id _pe!guid _pe!diaspora_handle _pe!serialized_public_key _u!id _pe!created_at _pe!updated_at _pe!closed_account _pe!fetch_status _pe!pod_id)))
+        (exists ((_p!author_id Int) (_p!public Int) (_p!guid String) (_p!type String) (_p!text String) (_p!created_at Int) (_p!updated_at Int) (_p!provider_display_name String) (_p!root_guid String) (_p!likes_count Int) (_p!comments_count Int) (_p!o_embed_cache_id Int) (_p!reshares_count Int) (_p!interacted_at Int) (_p!tweet_id String) (_p!open_graph_cache_id Int) (_p!tumblr_ids String) (_sv!id Int) (_sv!hidden Int))
+          (and
+            (!POSTS _p!id _p!author_id _p!public _p!guid _p!type _p!text _p!created_at _p!updated_at _p!provider_display_name _p!root_guid _p!likes_count _p!comments_count _p!o_embed_cache_id _p!reshares_count _p!interacted_at _p!tweet_id _p!open_graph_cache_id _p!tumblr_ids)
+            (!SHARE_VISIBILITIES _sv!id _p!id _sv!hidden "Post" _u!id)))
+))));
