@@ -39,9 +39,15 @@ class ApplicationController < ActionController::Base
                 :tags,
                 :open_publisher
 
+  after_action :reset_trace # For Privoxy.
+
   layout proc { request.format == :mobile ? "application" : "with_header_with_footer" }
 
   private
+
+  def reset_trace
+    ActiveRecord::Base.connection.execute("SET @TRACE = null")
+  end
 
   def default_serializer_options
     {root: false}
