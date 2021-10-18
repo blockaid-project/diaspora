@@ -5,7 +5,9 @@
 #   the COPYRIGHT file.
 
 class Profile < ApplicationRecord
-  lazy_load :bio, :gender, :birthday, :location
+  if Rails.env.include? "mod"
+    lazy_load :bio, :gender, :birthday, :location
+  end
 
   self.include_root_in_json = false
 

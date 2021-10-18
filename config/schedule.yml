@@ -1,0 +1,22 @@
+---
+:check_birthday:
+  :cron: 0 0 * * *
+  :class: Workers::CheckBirthday
+:clean_cached_files:
+  :cron: 39 4 * * *
+  :class: Workers::CleanCachedFiles
+:cleanup_old_exports:
+  :cron: 5 16 * * *
+  :class: Workers::CleanupOldExports
+:cleanup_pending_photos:
+  :cron: 26 13 * * *
+  :class: Workers::CleanupPendingPhotos
+:queue_users_for_removal:
+  :cron: 40 16 * * *
+  :class: Workers::QueueUsersForRemoval
+:recheck_scheduled_pods:
+  :cron: "*/30 * * * *"
+  :class: Workers::RecheckScheduledPods
+:recurring_pod_check:
+  :cron: 51 18 * * *
+  :class: Workers::RecurringPodCheck

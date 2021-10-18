@@ -16,7 +16,7 @@ Eye.application("diaspora") do
   process :web do
     unicorn_command = "bin/bundle exec unicorn -c config/unicorn.rb"
 
-    if rails_env == "production"
+    if rails_env.start_with? "production"
       start_command "#{unicorn_command} -D"
       daemonize false
       restart_command "kill -USR2 {PID}"

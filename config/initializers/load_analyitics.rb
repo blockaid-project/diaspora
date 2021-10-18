@@ -5,7 +5,7 @@
 # the COPYRIGHT file.
 #hack to allow us to access app config, rather than putting in environments/production.rb
 
-if Rails.env == 'production'
+if Rails.env.start_with? 'production'
   Diaspora::Application.configure do
     if AppConfig.privacy.google_analytics_key.present?
       require 'rack/google-analytics'

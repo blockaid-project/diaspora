@@ -5,6 +5,10 @@
 #   the COPYRIGHT file.
 
 class ApplicationController < ActionController::Base
+  if Rails.env.include? "checked"
+    before_action :reset_trace # For Privoxy.
+  end
+
   before_action :force_tablet_html
   has_mobile_fu
   protect_from_forgery except: :receive, with: :exception, prepend: true
@@ -38,8 +42,6 @@ class ApplicationController < ActionController::Base
                 :tag_followings,
                 :tags,
                 :open_publisher
-
-  after_action :reset_trace # For Privoxy.
 
   layout proc { request.format == :mobile ? "application" : "with_header_with_footer" }
 

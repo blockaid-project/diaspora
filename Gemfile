@@ -224,7 +224,7 @@ gem "versionist", "2.0.1"
 
 # gem "therubyracer", :platform => :ruby
 
-group :production do # we don"t install these on travis to speed up test runs
+group :production, :production_mod, :production_mod_checked do # we don"t install these on travis to speed up test runs
   # Analytics
 
   gem "rack-google-analytics", "1.2.0"

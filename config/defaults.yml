@@ -215,6 +215,12 @@ development:
 production:
   server:
     listen: 'unix:tmp/diaspora.sock'
+production_mod:
+  server:
+    listen: 'unix:tmp/diaspora.sock'
+production_mod_checked:
+  server:
+    listen: 'unix:tmp/diaspora.sock'
 test:
   environment:
     url: 'http://localhost:9887/'

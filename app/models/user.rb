@@ -595,9 +595,11 @@ class User < ApplicationRecord
     true
   end
 
-  def self.serialize_from_session(key, salt)
-    ActiveRecord::Base.connection.execute("SET @_MY_UID = #{key[0]}")
-    super
+  if Rails.env.include? "checked"
+    def self.serialize_from_session(key, salt)
+      ActiveRecord::Base.connection.execute("SET @_MY_UID = #{key[0]}")
+      super
+    end
   end
 
   private

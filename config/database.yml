@@ -1,0 +1,51 @@
+mysql: &mysql
+  adapter: mysql2
+  host: "localhost"
+  port: 3306
+  username: "diaspora"
+  password: "12345678"
+  prepared_statements: true
+#  socket: /tmp/mysql.sock
+# encoding: utf8mb4
+# collation: utf8mb4_bin
+
+
+common: &common
+  <<: *mysql
+
+  # Should match environment.sidekiq.concurrency
+  #pool: 25
+
+##################################################
+#### CONFIGURE ABOVE #############################
+##################################################
+
+# Normally you don't need to touch anything here
+
+combined: &combined
+  <<: *common
+development:
+  <<: *combined
+  database: diaspora_development
+production:
+  <<: *combined
+  driver: com.mysql.jdbc.Driver
+  database: diaspora_production_new
+production_mod:
+  <<: *combined
+  driver: com.mysql.jdbc.Driver
+  database: diaspora_production_new
+production_mod_checked:
+  <<: *combined
+  driver: edu.berkeley.cs.netsys.privacy_proxy.jdbc.PrivacyDriver
+  url: jdbc:privacy:thin:/home/ubuntu/diaspora/policy,jdbc:mysql://localhost:3306/diaspora_production_new?useSSL=false&useUnicode=true&character_set_server=utf8mb4&collation_server=utf8mb4_bin,diaspora_production_new
+  database: diaspora_production_new
+test:
+  <<: *combined
+  database: diaspora_test
+integration1:
+  <<: *combined
+  database: diaspora_integration1
+integration2:
+  <<: *combined
+  database: diaspora_integration2
