@@ -84,3 +84,5 @@ diaspora.iml
 
 # puma
 shared
+
+.rbenv-vars

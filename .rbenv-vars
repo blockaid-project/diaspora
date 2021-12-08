@@ -1,1 +1,0 @@
-JRUBY_OPTS='--server -Xcompile.invokedynamic=true -J-Dprivoxy.print_formulas=false -J-Dprivoxy.use_colors=true -J-Dprivoxy.enable_caching=true -J-Dprivoxy.quiet=true -J-Dprivoxy.cache_no_retain=false -J-Dprivoxy.skip_checking=false'

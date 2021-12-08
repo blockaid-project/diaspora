@@ -74,7 +74,7 @@ group :postgresql, optional: true do
   gem "pg",     "1.2.3"
 end
 
-git 'git@github.com:zhangwen0411/activerecord-jdbc-adapter.git', branch: '52-stable' do
+git 'git@github.com:zhangwen0411/activerecord-jdbc-adapter.git', branch: '52-stable-squashed' do
   gem 'activerecord-jdbcmysql-adapter', :platform => :jruby
 end
 
