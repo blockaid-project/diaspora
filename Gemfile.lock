@@ -1,7 +1,7 @@
 GIT
-  remote: git@github.com:zhangwen0411/activerecord-jdbc-adapter.git
+  remote: https://github.com/blockaid-project/activerecord-jdbc-adapter.git
   revision: 73f184be324b51a16baa6c391a39ba5a4840bde8
-  branch: 52-stable
+  branch: 52-stable-blockaid
   specs:
     activerecord-jdbc-adapter (52.7-java)
       activerecord (~> 5.2.0)
@@ -11,7 +11,8 @@ GIT
     jdbc-mysql (5.1.47)
 
 GIT
-  remote: git@github.com:zhangwen0411/devise_lastseenable.git
+  remote: https://github.com/blockaid-project/devise_lastseenable.git
+  branch: blockaid
   revision: dc003d84c532d8b3ac823293f76c6a2abac71d21
   specs:
     devise_lastseenable (0.0.6)
