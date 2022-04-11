@@ -12,8 +12,8 @@ GIT
 
 GIT
   remote: https://github.com/blockaid-project/devise_lastseenable.git
-  branch: blockaid
   revision: dc003d84c532d8b3ac823293f76c6a2abac71d21
+  branch: blockaid
   specs:
     devise_lastseenable (0.0.6)
       devise
