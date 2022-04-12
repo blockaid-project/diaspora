@@ -6,7 +6,7 @@
 
 class ApplicationController < ActionController::Base
   if Rails.env.include? "checked"
-    before_action :reset_trace # For Privoxy.
+    before_action :reset_trace # For Blockaid.
   end
 
   before_action :force_tablet_html
